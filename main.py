@@ -5,6 +5,8 @@ import urllib.parse
 import re
 import requests
 from datetime import datetime
+
+import db
 import functions
 
 intents = discord.Intents.default()
@@ -159,6 +161,11 @@ async def help_command(ctx):
     embed.set_footer(text="Luppole Made This")
 
     await ctx.send(embed=embed)
+
+@bot.command(name="addplayer")
+async def add_player_to_db(ctx, *, name):
+    db.add_player(name)
+    await ctx.send(f"A player named: **{name}** was successfuly added into the database!")
 
 @bot.hybrid_command(name="ping", description="mmmmmmmm")
 async def ping(ctx):
