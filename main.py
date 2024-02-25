@@ -1,8 +1,11 @@
 import discord
 from discord.ext import commands
+import base64
+import urllib.parse
+import re
+import requests
 from datetime import datetime
 import functions
-import db
 
 intents = discord.Intents.default()
 intents.message_content = True
@@ -103,7 +106,7 @@ async def get_ctf(ctx):
             dt_str = events[i]['start']
             dt = datetime.fromisoformat(dt_str)
             formatted_dt = dt.strftime("%Y-%m-%d - %H:%M")
-            events_tostring += f"{i + 1}. "
+            events_tostring += f"{i+1}. "
             events_tostring += f"**{events[i]['title']}**: "
             events_tostring += formatted_dt
             events_tostring += "\n"
@@ -121,31 +124,12 @@ async def get_ctf(ctx):
     info_tostring = f"Name: **{name}** \n World Rating: **{world_rating}** \n Country Rating: **{country_rating}** \n Country: **{country}**"
     await ctx.send(info_tostring)
 
-
 @bot.command(name="jwtdec")
 async def jwt_dec(ctx, string: str, key: str):
     info = functions.jwtdec(string, key)
     await ctx.send(info)
 
-@bot.command(name="addplayer")
-async def add_player_to_db(ctx, *, name):
-    db.add_player(name)
-    await ctx.send(f"A Player Named: **{name}** Was Successfully Added To The Database And Has The ID Of: {db.find_id(name)}")
 
-@bot.command(name="addpoints")
-async def add_player_to_db(ctx, name: str, points: int):
-    db.add_points(name, points)
-    await ctx.send(f"**{points}** Points Were Added To A Player Named **{name}**")
-
-@bot.command(name="findid")
-async def find_id_by_name(ctx, *, name):
-    id = db.find_id(name)
-    await ctx.send(f"The name of the player: {name} \n The ID of the player: {id}")
-
-@bot.command(name="points")
-async def find_id_by_name(ctx, *, name):
-    points = db.get_points(name)
-    await ctx.send(f"The player named {name} has {points} amount of points.")
 @bot.command(name="commands")
 async def help_command(ctx):
     embed = discord.Embed(
@@ -176,17 +160,14 @@ async def help_command(ctx):
 
     await ctx.send(embed=embed)
 
-
 @bot.hybrid_command(name="ping", description="mmmmmmmm")
 async def ping(ctx):
     await ctx.reply("Pong!")
-
 
 @bot.event
 async def on_ready():
     await bot.tree.sync()
     print(f'{bot.user} has connected to Discord!')
 
-
 # Run the bot with the token
-bot.run('TOKEN')
+bot.run('MTE4ODU5Mzc5OTQxNzU3NzQ4Mg.GY2NVU.KDkz7zrTfshEy7wQizKp2Qv67rUTG7BbGfUuko')

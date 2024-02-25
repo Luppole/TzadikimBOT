@@ -5,20 +5,42 @@ import requests
 import jwt
 
 def jwtdec(jwtstr, key):
-    encoded_token = 'your_encoded_jwt_token'
-    secret_key = 'your_secret_key'
-
     try:
-        decoded_token = jwt.decode(encoded_token, secret_key, algorithms=['HS256'])
+        decoded_token = jwt.decode(jwtstr, key, algorithms=['HS256'])
         return f"Decoded Token: {decoded_token}"
     except jwt.ExpiredSignatureError:
         return "Token has expired"
     except jwt.InvalidTokenError:
         return "Invalid token"
 
+def b85enc(text):
+    try:
+        encoded_text = f"**{base64.b85encode(text.encode('utf-8')).decode('utf-8')}**"
+    except:
+        encoded_text = "**Invalid Input**"
+
+    return encoded_text
+
+def b85dec(text):
+    try:
+        decoded_text = f"**{base64.b85decode(text.encode('utf-8')).decode('utf-8')}**"
+
+    except:
+        decoded_text = "**Invalid Input**"
+
+    return decoded_text
+
+def b64dec(text):
+    try:
+        decoded_text = f"**{base64.b64decode(text.encode('utf-8')).decode('utf-8')}**"
+    except:
+        decoded_text = "**Invalid Input**"
+
+    return decoded_text
+
 def b64enc(text):
     try:
-        encoded_text = f"**base64.b64encode(text.encode('utf-8')).decode('utf-8')**"
+        encoded_text = f"**{base64.b64encode(text.encode('utf-8')).decode('utf-8')}**"
     except:
         encoded_text = "**Invalid Input**"
 
@@ -27,7 +49,7 @@ def b64enc(text):
 
 def b64dec(text):
     try:
-        decoded_text = f"**base64.b64decode(text.encode('utf-8')).decode('utf-8')**"
+        decoded_text = f"**{base64.b64decode(text.encode('utf-8')).decode('utf-8')}**"
     except:
         decoded_text = "**Invalid Input**"
 
@@ -36,7 +58,7 @@ def b64dec(text):
 
 def b32enc(text):
     try:
-        encoded_text = base64.b32encode(text.encode('utf-8')).decode('utf-8')
+        encoded_text = f"**{base64.b32encode(text.encode('utf-8')).decode('utf-8')}**"
     except:
         encoded_text = "**Invalid Input**"
 
@@ -45,7 +67,7 @@ def b32enc(text):
 
 def b32dec(text):
     try:
-        decoded_text = base64.b32decode(text.encode('utf-8')).decode('utf-8')
+        decoded_text = f"**{base64.b32decode(text.encode('utf-8')).decode('utf-8')}**"
     except:
         decoded_text = "**Invalid Input**"
     return decoded_text
