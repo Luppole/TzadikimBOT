@@ -177,4 +177,4 @@ async def on_ready():
     print(f'{bot.user} has connected to Discord!')
 
 # Run the bot with the token
-bot.run('MTE4ODU5Mzc5OTQxNzU3NzQ4Mg.GY2NVU.KDkz7zrTfshEy7wQizKp2Qv67rUTG7BbGfUuko')
+bot.run('TOKEN')
