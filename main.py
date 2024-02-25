@@ -1,9 +1,5 @@
 import discord
 from discord.ext import commands
-import base64
-import urllib.parse
-import re
-import requests
 from datetime import datetime
 import functions
 
@@ -106,7 +102,7 @@ async def get_ctf(ctx):
             dt_str = events[i]['start']
             dt = datetime.fromisoformat(dt_str)
             formatted_dt = dt.strftime("%Y-%m-%d - %H:%M")
-            events_tostring += f"{i+1}. "
+            events_tostring += f"{i + 1}. "
             events_tostring += f"**{events[i]['title']}**: "
             events_tostring += formatted_dt
             events_tostring += "\n"
@@ -123,6 +119,7 @@ async def get_ctf(ctx):
     country = info["country"]
     info_tostring = f"Name: **{name}** \n World Rating: **{world_rating}** \n Country Rating: **{country_rating}** \n Country: **{country}**"
     await ctx.send(info_tostring)
+
 
 @bot.command(name="jwtdec")
 async def jwt_dec(ctx, string: str, key: str):
@@ -160,14 +157,17 @@ async def help_command(ctx):
 
     await ctx.send(embed=embed)
 
+
 @bot.hybrid_command(name="ping", description="mmmmmmmm")
 async def ping(ctx):
     await ctx.reply("Pong!")
+
 
 @bot.event
 async def on_ready():
     await bot.tree.sync()
     print(f'{bot.user} has connected to Discord!')
 
+
 # Run the bot with the token
-bot.run('TOKEN')
+bot.run('MTE4ODU5Mzc5OTQxNzU3NzQ4Mg.G1gJ1y.kvKAZHaEZMeDjGjLUZJM9j-bLtT0L9ctFp7PwI')
