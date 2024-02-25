@@ -14,6 +14,7 @@ intents.message_content = True
 help_command = commands.DefaultHelpCommand(no_category='Commands')
 bot = commands.Bot(command_prefix='!', intents=intents, help_command=None)
 
+SUPERVISOR_ROLE_ID = 1148530335550804018
 
 @bot.command(name='64enc', description="Encoding a text using Base64", category="Encoding", help_command=help_command)
 async def encode64(ctx, *, text):
@@ -131,7 +132,10 @@ async def jwt_dec(ctx, string: str, key: str):
     info = functions.jwtdec(string, key)
     await ctx.send(info)
 
-
+@bot.command(name="hash")
+async def hashing(ctx, *, string):
+    info = functions.hash_text(string)
+    await ctx.send(info)
 @bot.command(name="commands")
 async def help_command(ctx):
     embed = discord.Embed(
@@ -163,9 +167,12 @@ async def help_command(ctx):
     await ctx.send(embed=embed)
 
 @bot.command(name="addplayer")
+@commands.check(lambda ctx: functions.has_role(ctx.author, SUPERVISOR_ROLE_ID))
 async def add_player_to_db(ctx, *, name):
     db.add_player(name)
     await ctx.send(f"A player named: **{name}** was successfuly added into the database!")
+
+
 
 @bot.hybrid_command(name="ping", description="mmmmmmmm")
 async def ping(ctx):

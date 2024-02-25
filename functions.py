@@ -3,6 +3,18 @@ import urllib.parse
 import re
 import requests
 import jwt
+import hashlib
+
+def has_role(user, role_id):
+    if isinstance(user, discord.Member):
+        role = discord.utils.get(user.roles, id=role_id)
+        return role is not None
+    return False
+
+def hash_text(text: str):
+    hasher = hashlib.sha256()
+    hasher.update(text.encode())
+    return hasher.hexdigest()
 
 def jwtdec(jwtstr, key):
     try:
