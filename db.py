@@ -53,6 +53,7 @@ def add_points(player_id, points_to_add):
     conn.commit()
     conn.close()
 
+
 def get_points(name):
     conn = sqlite3.connect('pointing_system.db')
     cursor = conn.cursor()
@@ -61,6 +62,25 @@ def get_points(name):
     conn.close()
     return row[0] if row else None
 
+
+def remove_player_by_name(name):
+    conn = sqlite3.connect('pointing_system.db')
+    cursor = conn.cursor()
+    cursor.execute("DELETE FROM pointing_system WHERE name=?", (name,))
+    conn.commit()
+    conn.close()
+
+def remove_player_by_id(id):
+    conn = sqlite3.connect('pointing_system.db')
+    cursor = conn.cursor()
+    cursor.execute("DELETE FROM pointing_system WHERE id=?", (id,))
+    conn.commit()
+    conn.close()
+
+def set_points(points, id):
+    conn = sqlite3.connect('pointing_system.db')
+    cursor = conn.cursor()
+    cursor.execute("UPDATE pointing_system SET points = ? WHERE id = ?", (points, id))
 
 # Always execute
 create_database()
