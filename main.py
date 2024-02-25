@@ -2,6 +2,7 @@ import discord
 from discord.ext import commands
 from datetime import datetime
 import functions
+import db
 
 intents = discord.Intents.default()
 intents.message_content = True
@@ -126,7 +127,25 @@ async def jwt_dec(ctx, string: str, key: str):
     info = functions.jwtdec(string, key)
     await ctx.send(info)
 
+@bot.command(name="addplayer")
+async def add_player_to_db(ctx, *, name):
+    db.add_player(name)
+    await ctx.send(f"A Player Named: **{name}** Was Successfully Added To The Database And Has The ID Of: {db.find_id(name)}")
 
+@bot.command(name="addpoints")
+async def add_player_to_db(ctx, name: str, points: int):
+    db.add_points(name, points)
+    await ctx.send(f"**{points}** Points Were Added To A Player Named **{name}**")
+
+@bot.command(name="findid")
+async def find_id_by_name(ctx, *, name):
+    id = db.find_id(name)
+    await ctx.send(f"The name of the player: {name} \n The ID of the player: {id}")
+
+@bot.command(name="points")
+async def find_id_by_name(ctx, *, name):
+    points = db.get_points(name)
+    await ctx.send(f"The player named {name} has {points} amount of points.")
 @bot.command(name="commands")
 async def help_command(ctx):
     embed = discord.Embed(
@@ -170,4 +189,4 @@ async def on_ready():
 
 
 # Run the bot with the token
-bot.run('MTE4ODU5Mzc5OTQxNzU3NzQ4Mg.G1gJ1y.kvKAZHaEZMeDjGjLUZJM9j-bLtT0L9ctFp7PwI')
+bot.run('TOKEN')
