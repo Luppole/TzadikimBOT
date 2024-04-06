@@ -5,6 +5,7 @@ import urllib.parse
 import re
 import requests
 from datetime import datetime, timezone
+from zoneinfo import ZoneInfo
 
 import db
 import functions
@@ -108,7 +109,7 @@ async def get_ctf(ctx):
         for i in range(5):
             dt_str = events[i]['start']
             dt = datetime.fromisoformat(dt_str)
-            dt_local = dt.astimezone()
+            dt_local = dt.astimezone(ZoneInfo("Asia/Jerusalem"))
             formatted_dt = dt_local.strftime("%Y-%m-%d - %H:%M")
             events_tostring += f"{i+1}. "
             events_tostring += f"**{events[i]['title']}**: "
